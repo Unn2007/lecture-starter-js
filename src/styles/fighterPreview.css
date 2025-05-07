@@ -6,8 +6,39 @@
 
 .fighter-preview___right {
   align-items: flex-end;
+  height: 100%;
 }
 
 .fighter-preview___left {
   align-items: flex-start;
+  height: 100%;
+}
+
+
+.fighter-preview___info {
+  margin-top: auto;
+  padding:10px;
+  color:rgb(231, 13, 166);
+  font-size:24px;
+  background: #ffdfa7;
+  border: 5px solid #ca9650;
+  text-align: center;
+
+}
+
+.fighter-preview___name {
+  margin: 0px 0px 5px 0px;
+
+}
+
+.fighter-preview___stats {
+  display: flex;
+  column-gap: 5px;
+}
+
+.fighter-preview___stats p {
+margin: 0px;
+font-size: 16px;
+font-weight: 700;
+color:red;
 }
