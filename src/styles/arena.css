@@ -61,3 +61,58 @@
   width: 100%;
   background-color: #ebd759;
 }
+
+
+@keyframes hitEffectRight {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-250px); }
+  50% { transform: translateX(250px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes hitEffectLeft {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(250px); }
+  50% { transform: translateX(-250px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes blockEffect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes criticalEffect {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(2); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes damageFlash {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(255, 0, 0, 0.3); }
+  100% { background-color: transparent; }
+}
+
+
+
+.fighter-damaged {
+  animation: damageFlash 0.3s ease;
+}
+
+.fighter-hit___right {
+  animation: hitEffectRight 0.3s ease;
+}
+
+.fighter-hit___left {
+  animation: hitEffectLeft 0.3s ease;
+}
+
+.fighter-block {
+  animation: blockEffect 0.3s ease;
+}
+
+.fighter-critical {
+  animation: criticalEffect 0.6s ease;
+}
