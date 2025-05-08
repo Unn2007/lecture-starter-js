@@ -20,6 +20,22 @@ export function getDamage(attacker, defender) {
     return damage > 0 ? damage : 0;
 }
 
+function applyEffect(fighterPosition, effectClass) {
+    const fighterEl = document.querySelector(`.arena___${fighterPosition}-fighter`);
+    if (!fighterEl) return;
+
+    fighterEl.classList.add(effectClass);
+    setTimeout(() => fighterEl.classList.remove(effectClass), 400);
+}
+
+function showDamageEffect(fighterPosition) {
+    const fighterEl = document.querySelector(`.arena___${fighterPosition}-fighter`);
+    if (!fighterEl) return;
+
+    fighterEl.classList.add('fighter-damaged');
+    setTimeout(() => fighterEl.classList.remove('fighter-damaged'), 300);
+}
+
 export async function fight(firstFighter, secondFighter) {
     return new Promise(resolve => {
         // resolve the promise with the winner when fight is over
@@ -66,19 +82,29 @@ export async function fight(firstFighter, secondFighter) {
         const onKeyDown = event => {
             pressedKeys.add(event.code);
 
-            if (event.code === controls.PlayerOneBlock) isBlocking.left = true;
-            if (event.code === controls.PlayerTwoBlock) isBlocking.right = true;
+            if (event.code === controls.PlayerOneBlock) {
+                isBlocking.left = true;
+                applyEffect('left', 'fighter-block');
+            }
+            if (event.code === controls.PlayerTwoBlock) {
+                isBlocking.right = true;
+                applyEffect('right', 'fighter-block');
+            }
 
             if (event.code === controls.PlayerOneAttack && !isBlocking.left) {
                 const damage = getDamage(firstFighter, secondFighter);
                 health.right -= damage;
                 updateHealthBar('right');
+                showDamageEffect('right');
+                applyEffect('left', 'fighter-hit___left');
             }
 
             if (event.code === controls.PlayerTwoAttack && !isBlocking.right) {
                 const damage = getDamage(secondFighter, firstFighter);
                 health.left -= damage;
                 updateHealthBar('left');
+                showDamageEffect('left');
+                applyEffect('right', 'fighter-hit___right');
             }
 
             const now = Date.now();
@@ -87,6 +113,8 @@ export async function fight(firstFighter, secondFighter) {
                     health.right -= 2 * firstFighter.attack;
                     updateHealthBar('right');
                     lastCriticalHit.left = now;
+                    applyEffect('left', 'fighter-critical');
+                    showDamageEffect('right');
                 }
             }
 
@@ -95,6 +123,8 @@ export async function fight(firstFighter, secondFighter) {
                     health.left -= 2 * secondFighter.attack;
                     updateHealthBar('left');
                     lastCriticalHit.right = now;
+                    applyEffect('right', 'fighter-critical');
+                    showDamageEffect('left');
                 }
             }
 
